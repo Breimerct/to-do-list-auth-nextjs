@@ -1,19 +1,31 @@
-import { MongoClient } from "mongodb";
+import mongoose, { connection } from "mongoose";
 
-const mongoUri = process.env.MONGO_URI;
-const DBName = process.env.DB_NAME;
+const MONGODB_URI = process.env.MONGO_URI as string;
 
-if (!mongoUri) {
-    throw new Error("MONGO_URI is not defined");
+if (!MONGODB_URI) {
+    console.error("No MongoDB URI provided");
+    process.exit(1);
 }
 
-if (!DBName) {
-    throw new Error("DB_NAME is not defined");
-}
+const conn = {
+    isConnected: false,
+};
 
-const client = new MongoClient(mongoUri);
+const connectDB = async () => {
+    if (conn.isConnected) return;
 
-export async function connect() {
-    await client.connect();
-    return client.db(DBName);
-}
+    const db = await mongoose.connect(MONGODB_URI);
+
+    conn.isConnected = !!db.connections[0].readyState;
+    console.log(`MongoDB Connected: ${conn.isConnected}`);
+};
+
+connection.on("connected", () => {
+    console.log("MongoDB connected");
+});
+
+connection.on("error", (error) => {
+    console.error(`MongoDB connection error: ${error}`);
+});
+
+export default connectDB;
