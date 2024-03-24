@@ -1,8 +1,8 @@
 interface UserDto {
-    id?: string;
+    _id?: string;
     name: string;
     lastname: string;
-    fullname: string;
+    fullName: string;
     email: string;
     password: string;
 }
