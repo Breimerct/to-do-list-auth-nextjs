@@ -2,7 +2,7 @@
 import React, { FC, InputHTMLAttributes } from "react";
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
-    label: string;
+    label?: string;
     isInvalid?: boolean;
     messageError?: string;
 }
