@@ -2,6 +2,7 @@
 import { useTaskStore } from "@/store/task.store";
 import { useUserStore } from "@/store/user.store";
 import { useEffect } from "react";
+import TaskItem from "./task-item";
 
 const TaskList = () => {
     const { fetchTasks, tasks } = useTaskStore();
@@ -11,13 +12,12 @@ const TaskList = () => {
         if (tasks.length === 0 && user) fetchTasks(user._id);
 
         return () => {};
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
 
     return (
-        <ul>
+        <ul className="w-full flex flex-col gap-4">
             {tasks.map((task) => (
-                <li key={task._id}>{task.title}</li>
+                <TaskItem key={task._id} task={task} />
             ))}
         </ul>
     );
