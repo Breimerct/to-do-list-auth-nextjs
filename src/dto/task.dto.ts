@@ -3,5 +3,5 @@ interface TaskDto {
     userId: string | UserDto;
     title: string;
     description: string;
-    completed: string;
+    completed: boolean;
 }
