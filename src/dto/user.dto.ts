@@ -4,5 +4,6 @@ interface UserDto {
     lastname: string;
     fullName: string;
     email: string;
+    avatar: string;
     password: string;
 }

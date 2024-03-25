@@ -62,3 +62,9 @@ export const lowerCaseObject = <T>(object: T | any): T => {
         password,
     };
 };
+
+export const capitalizeText = (text: string) => {
+    if (!text) return "";
+
+    return text.charAt(0).toUpperCase() + text.slice(1);
+}
