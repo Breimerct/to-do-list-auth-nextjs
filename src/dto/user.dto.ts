@@ -1,5 +1,5 @@
 interface UserDto {
-    _id?: string;
+    _id: string;
     name: string;
     lastname: string;
     fullName: string;

@@ -2,7 +2,7 @@ import UserModel, { UserDocument } from "@/models/user.model";
 import * as bcrypt from "bcrypt";
 import mongoose, { Model } from "mongoose";
 
-export const hashPassword = async (password: string) => {
+export const hashPassword = async (password: string | undefined) => {
     if (!password) {
         throw new Error("password required");
     }
