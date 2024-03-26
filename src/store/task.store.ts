@@ -1,8 +1,9 @@
-import axios from "axios";
+import axios, { AxiosError, isAxiosError } from "axios";
 import { create } from "zustand";
 import { useUserStore } from "./user.store";
 import { TaskDto } from "@/dto/task.dto";
 import { useCommonStore } from "./common.store";
+import { toast } from "react-toastify";
 
 type State = {
     tasks: TaskDto[];
@@ -50,9 +51,13 @@ export const useTaskStore = create<State & Actions>((set) => ({
 
             set({ taskSelected: null });
 
+            toast.success("Tarea creada correctamente");
+
             useTaskStore.getState().fetchTasks(task.userId as string);
         } catch (error) {
-            console.log(error);
+            if (isAxiosError(error)) {
+                toast.error(error.response?.data.message || "Error al crear tarea");
+            }
             useTaskStore.getState().fetchTasks(task.userId as string);
         } finally {
             hideGlobalLoading();
@@ -65,18 +70,25 @@ export const useTaskStore = create<State & Actions>((set) => ({
 
             set({ taskSelected: null });
 
+            toast.success("Tarea actualizada correctamente");
+
             useTaskStore.getState().fetchTasks(task.userId as string);
         } catch (error) {
-            console.log(error);
+            if (isAxiosError(error)) {
+                toast.error(error.response?.data.message || "Error al actualizar tarea");
+            }
+
             useTaskStore.getState().fetchTasks(task.userId as string);
         }
     },
 
     deleteTask: async (id) => {
-        await axios.delete(`/api/task/${id}`);
+        const { data } = await axios.delete(`/api/task/${id}`);
         set((state) => ({
             tasks: state.tasks.filter((t) => t._id !== id),
         }));
+
+        toast.success(data.message);
     },
 
     setTaskSelected: (task) => set({ taskSelected: task }),

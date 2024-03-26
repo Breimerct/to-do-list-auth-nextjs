@@ -7,7 +7,7 @@ export async function DELETE(request: Request, response: { params: { id: string 
         const task = await deleteTask(id);
 
         const messageResponse = {
-            message: `Task with id ${id} deleted`,
+            message: `Tarea con ID ${id} Eliminada`,
         };
 
         return Response.json(messageResponse, { status: 200 });
@@ -26,13 +26,6 @@ export async function PATCH(request: Request, response: { params: { id: string }
     try {
         const { id } = response.params;
         const updateTaskObj = (await request.json()) as TaskDto;
-
-        // validar que la propiedad completed sea un string
-        if (updateTaskObj.completed !== undefined) {
-            if (typeof updateTaskObj.completed !== "boolean") {
-                throw new Error("completed must be a boolean");
-            }
-        }
 
         const task = await updateTask(id, updateTaskObj);
 
