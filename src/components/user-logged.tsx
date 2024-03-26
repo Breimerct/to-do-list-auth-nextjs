@@ -8,12 +8,6 @@ const UserLogged = () => {
     const { user } = useUserStore();
     const { logout } = useAuthStore();
 
-    const capitalize = (text: string | undefined) => {
-        if (!text) return;
-
-        return text.replace(/\b\w/g, (char) => char.toUpperCase());
-    };
-
     return (
         <section className="flex items-center gap-4">
             <div className="flex items-center gap-2 flex-nowrap">
@@ -30,7 +24,7 @@ const UserLogged = () => {
                 </picture>
 
                 {!!user ? (
-                    <span>{capitalize(user?.fullName)}</span>
+                    <span className="capitalize font-semibold">{user?.fullName}</span>
                 ) : (
                     <span className="text-gray-500 animate-pulse bg-gray-400 rounded-md p-1 w-32 h-6"></span>
                 )}
