@@ -1,9 +1,11 @@
 import axios from "axios";
 import { create } from "zustand";
 import { useUserStore } from "./user.store";
+import { TaskDto } from "@/dto/task.dto";
 
 type State = {
     tasks: TaskDto[];
+    taskSelected: TaskDto | null;
 };
 
 type Actions = {
@@ -11,10 +13,13 @@ type Actions = {
     createTask: (task: TaskDto) => void;
     updateTask: (id: string, task: TaskDto) => void;
     deleteTask: (id: string) => void;
+    setTaskSelected: (task: TaskDto | null) => void;
+    setTasks: (tasks: TaskDto[]) => void;
 };
 
 const initialState: State = {
     tasks: [],
+    taskSelected: null,
 };
 
 export const useTaskStore = create<State & Actions>((set) => ({
@@ -31,10 +36,16 @@ export const useTaskStore = create<State & Actions>((set) => ({
     },
 
     updateTask: async (id, task) => {
-        const { data } = await axios.patch<TaskDto>(`/api/task/${id}`, task);
-        set((state) => ({
-            tasks: state.tasks.map((t) => (t._id === data._id ? data : t)),
-        }));
+        try {
+            await axios.patch<TaskDto>(`/api/task/${id}`, task);
+
+            set({ taskSelected: null });
+
+            useTaskStore.getState().fetchTasks(task.userId as string);
+        } catch (error) {
+            console.log(error);
+            useTaskStore.getState().fetchTasks(task.userId as string);
+        }
     },
 
     deleteTask: async (id) => {
@@ -43,4 +54,8 @@ export const useTaskStore = create<State & Actions>((set) => ({
             tasks: state.tasks.filter((t) => t._id !== id),
         }));
     },
+
+    setTaskSelected: (task) => set({ taskSelected: task }),
+
+    setTasks: (tasks) => set({ tasks }),
 }));

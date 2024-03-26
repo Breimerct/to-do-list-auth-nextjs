@@ -1,3 +1,4 @@
+import { TaskDto } from "@/dto/task.dto";
 import { deleteTask, updateTask } from "@/services/task.service";
 
 export async function DELETE(request: Request, response: { params: { id: string } }) {
@@ -25,6 +26,14 @@ export async function PATCH(request: Request, response: { params: { id: string }
     try {
         const { id } = response.params;
         const updateTaskObj = (await request.json()) as TaskDto;
+
+        // validar que la propiedad completed sea un string
+        if (updateTaskObj.completed !== undefined) {
+            if (typeof updateTaskObj.completed !== "boolean") {
+                throw new Error("completed must be a boolean");
+            }
+        }
+
         const task = await updateTask(id, updateTaskObj);
 
         return Response.json(task, { status: 200 });

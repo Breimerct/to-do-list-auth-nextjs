@@ -1,3 +1,4 @@
+import { TaskDto } from "@/dto/task.dto";
 import { createTask, getTasks } from "@/services/task.service";
 
 export async function GET() {

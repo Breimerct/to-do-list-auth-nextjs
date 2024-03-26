@@ -1,3 +1,4 @@
+import { TaskDto } from "@/dto/task.dto";
 import { validateMongoId } from "@/helpers/utils";
 import connectDB from "@/lib/mongo";
 import taskModel from "@/models/task.model";
@@ -25,11 +26,9 @@ export const updateTask = async (id: string, task: TaskDto) => {
             throw new Error(`Task with id ${id} not found`);
         }
 
-        existingTask.title = task.title || existingTask.title;
-        existingTask.description = task.description || existingTask.description;
-        existingTask.completed = task.completed;
+        task.title = task.title || existingTask.title;
 
-        const updateTask = await taskModel.findByIdAndUpdate(id, existingTask, {
+        const updateTask = await taskModel.findByIdAndUpdate(id, task, {
             new: true,
         });
 

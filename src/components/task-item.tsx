@@ -4,13 +4,14 @@ import { EditIcon, TrashIcon } from "./icons";
 import { useTaskStore } from "@/store/task.store";
 import Swal from "sweetalert2";
 import Input from "./input";
+import { TaskDto } from "@/dto/task.dto";
 
 interface TaskItemProps {
     task: TaskDto;
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
-    const { deleteTask } = useTaskStore();
+    const { deleteTask, updateTask, setTaskSelected, tasks, setTasks } = useTaskStore();
 
     const confirmDelete = async () => {
         const { value } = await Swal.fire({
@@ -27,6 +28,23 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
         if (value && task._id) deleteTask(task._id);
     };
 
+    const selectTask = () => {
+        setTaskSelected(task);
+    };
+
+    const updateStatusTask = () => {
+        setTasks(
+            tasks.map((t) => {
+                if (t._id === task._id) {
+                    return { ...t, completed: !t.completed };
+                }
+                return t;
+            })
+        );
+
+        updateTask(task._id as string, { ...task, completed: !task.completed });
+    };
+
     return (
         <li
             className={`w-full flex items-center p-4 shadow-md rounded-md ${
@@ -41,9 +59,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                         type="checkbox"
                         checked={task.completed}
                         disabled={task.completed}
-                        onChange={() => {
-                            task.completed = !task.completed;
-                        }}
+                        onChange={updateStatusTask}
                     />
                 </div>
 
@@ -54,11 +70,16 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
             </div>
 
             <div className="flex gap-2 flex-nowrap items-center">
-                <button className="bg-orange-400 hover:bg-orange-300 hover:shadow-md text-white transition-all p-2 rounded-full w-10 h-10">
+                <button
+                    className="bg-orange-400 hover:bg-orange-300 hover:shadow-md text-white transition-all p-2 rounded-full w-10 h-10"
+                    type="button"
+                    onClick={selectTask}
+                >
                     <EditIcon size={24} />
                 </button>
                 <button
                     className="bg-red-500 hover:bg-red-600 hover:shadow-md text-white transition-all p-2 rounded-full w-10 h-10"
+                    type="button"
                     onClick={confirmDelete}
                 >
                     <TrashIcon size={24} />
