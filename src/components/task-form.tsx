@@ -20,7 +20,10 @@ const TaskForm = () => {
     };
 
     const validationSchema = Yup.object({
-        title: Yup.string().required("El campo es requerido."),
+        title: Yup.string()
+            .required("El campo es requerido.")
+            .max(50, "Máximo 50 caracteres."),
+        description: Yup.string().max(120, "Máximo 120 caracteres."),
     });
 
     const formik = useFormik({
@@ -66,9 +69,11 @@ const TaskForm = () => {
         <form className="flex flex-col gap-2" onSubmit={formik.handleSubmit}>
             <div>
                 <Input
+                    hint
                     label="Titulo"
                     type="text"
                     placeholder="Ingrese un titulo"
+                    maxLength={50}
                     isInvalid={formik.touched.title && !!formik.errors.title}
                     messageError={formik.errors.title}
                     {...formik.getFieldProps("title")}
@@ -77,8 +82,12 @@ const TaskForm = () => {
 
             <div>
                 <TextArea
+                    hint
                     label="Descripción"
                     placeholder="Ingrese una descripción"
+                    maxLength={120}
+                    isInvalid={formik.touched.description && !!formik.errors.description}
+                    messageError={formik.errors.description}
                     {...formik.getFieldProps("description")}
                 />
             </div>
