@@ -108,7 +108,7 @@ const RegisterForm = () => {
             </div>
 
             <button className="btn-primary-outline" type="submit">
-                Register
+                Registrarse
             </button>
 
             <div className="flex justify-center items-center col-span-2 mt-2">
