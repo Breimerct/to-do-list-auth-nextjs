@@ -5,17 +5,19 @@ import { useEffect } from "react";
 import TaskItem from "./task-item";
 import TaskItemSkeleton from "./task-item-skeleton";
 import { MoodSearchIcon } from "./icons";
+import { usePathname } from "next/navigation";
 
 const TaskList = () => {
     const { fetchTasks, tasks, loadingTasks, setLoadingTasks } = useTaskStore();
     const { user } = useUserStore();
+    const pathName = usePathname();
 
     useEffect(() => {
         setLoadingTasks(true);
-        if (tasks.length === 0 && user) fetchTasks(user._id);
+        if (user && (tasks.length === 0 || pathName === "/")) fetchTasks(user._id);
 
         return () => {};
-    }, [user]);
+    }, [user, pathName]);
 
     return (
         <ul className="w-full flex flex-col gap-4 mt-4">
