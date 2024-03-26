@@ -60,6 +60,9 @@ const UserInfo = () => {
                     className="rounded-full w-24 h-24"
                 />
             </picture>
+            <span>
+                ultima vez actualizado: {new Date(user?.updatedAt || "").toLocaleString()}
+            </span>
 
             <div className="w-full">
                 <div className="flex justify-end">

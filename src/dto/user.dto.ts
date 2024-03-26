@@ -6,4 +6,6 @@ export interface UserDto {
     email: string;
     avatar: string;
     password: string;
+    createdAt: Date;
+    updatedAt: Date;
 }

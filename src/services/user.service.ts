@@ -58,6 +58,7 @@ export const updateUser = async (id: string, user: UserDto) => {
         lowerCaseUser.fullName = `${lowerCaseUser.name} ${lowerCaseUser.lastname}`;
         lowerCaseUser.avatar = getAvatarUrl(lowerCaseUser.fullName);
         lowerCaseUser.email = lowerCaseUser.email || existingUser.email;
+        lowerCaseUser.updatedAt = new Date();
 
         const updatedUser = await UserModel.findByIdAndUpdate(id, lowerCaseUser, {
             new: true,
