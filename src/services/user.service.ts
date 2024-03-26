@@ -1,10 +1,5 @@
 import { UserDto } from "@/dto/user.dto";
-import {
-    hashPassword,
-    hideEmail,
-    lowerCaseObject,
-    validateMongoId,
-} from "@/helpers/utils";
+import { hashPassword, lowerCaseObject, validateMongoId } from "@/helpers/utils";
 import connectDB from "@/lib/mongo";
 import UserModel from "@/models/user.model";
 
@@ -17,9 +12,7 @@ export const createUser = async (user: UserDto) => {
         });
 
         if (existingUser) {
-            throw new Error(
-                `Usuario con email ${hideEmail(lowerCaseUser.email)}, ya existe.`
-            );
+            throw new Error(`Usuario con email ${lowerCaseUser.email}, ya existe.`);
         }
 
         const hashedPassword = await hashPassword(lowerCaseUser.password);
@@ -51,9 +44,7 @@ export const updateUser = async (id: string, user: UserDto) => {
                 email: lowerCaseUser.email,
             });
             if (existingUserEmail) {
-                throw new Error(
-                    `Usuario con email ${hideEmail(lowerCaseUser.email)}, ya existe.`
-                );
+                throw new Error(`Usuario con email ${lowerCaseUser.email}, ya existe.`);
             }
         }
 

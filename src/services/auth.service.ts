@@ -1,4 +1,4 @@
-import { hideEmail, validatePassword } from "@/helpers/utils";
+import { validatePassword } from "@/helpers/utils";
 import connectDB from "@/lib/mongo";
 import UserModel from "@/models/user.model";
 

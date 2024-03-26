@@ -25,21 +25,6 @@ export const validatePassword = async (password: string, hashPassword: string) =
     return await bcrypt.compare(password, hashPassword);
 };
 
-export const hideEmail = (email: string) => {
-    if (!email) {
-        throw new Error("email required");
-    }
-
-    const userEmail = email.toLowerCase();
-    const [username, domain] = userEmail.split("@");
-    const [host, extension] = domain.split(".");
-
-    const hiddenUsername = username.slice(0, 2) + "*".repeat(username.length - 2);
-    const hiddenDomain = "*".repeat(host.length) + `.${extension}`;
-
-    return `${hiddenUsername}@${hiddenDomain}`;
-};
-
 export const validateMongoId = (id: string) => {
     if (!id) {
         throw new Error("id required");
@@ -62,9 +47,3 @@ export const lowerCaseObject = <T>(object: T | any): T => {
         password,
     };
 };
-
-export const capitalizeText = (text: string) => {
-    if (!text) return "";
-
-    return text.charAt(0).toUpperCase() + text.slice(1);
-}
