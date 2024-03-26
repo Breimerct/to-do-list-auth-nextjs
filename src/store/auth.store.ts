@@ -11,12 +11,13 @@ type Actions = {
     login: (email: string, password: string) => Promise<boolean>;
     register: (data: UserDto) => Promise<boolean>;
     logout: () => void;
+    changePassword: (oldPassword: string, newPassword: string) => Promise<boolean>;
 };
 
 const initialState: State = {};
 
 const { showGlobalLoading, hideGlobalLoading } = useCommonStore.getState();
-const { setUser, clearUser } = useUserStore.getState();
+const { setUser, clearUser, user } = useUserStore.getState();
 
 export const useAuthStore = create<State & Actions>((set) => ({
     ...initialState,
@@ -63,5 +64,28 @@ export const useAuthStore = create<State & Actions>((set) => ({
     logout: () => {
         clearUser();
         localStorage.removeItem("user");
+    },
+
+    changePassword: async (oldPassword, newPassword) => {
+        try {
+            showGlobalLoading();
+            const { data } = await axios.put(`/api/auth/change-password/${user?._id}`, {
+                oldPassword,
+                newPassword,
+            });
+
+            toast.success(data.message);
+
+            return true;
+        } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(
+                    error.response?.data.message || "Error al cambiar contraseña"
+                );
+            }
+            return false;
+        } finally {
+            hideGlobalLoading();
+        }
     },
 }));

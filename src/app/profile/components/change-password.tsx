@@ -1,6 +1,7 @@
 "use client";
 import { EditIcon } from "@/components/icons";
 import Input from "@/components/input";
+import { useAuthStore } from "@/store/auth.store";
 import { useUserStore } from "@/store/user.store";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -8,7 +9,7 @@ import * as Yup from "yup";
 
 const ChangePassword = () => {
     const [isEdit, setIsEdit] = useState(false);
-    const { updateProfile } = useUserStore();
+    const { changePassword } = useAuthStore();
 
     const validateSchema = Yup.object().shape({
         currentPassword: Yup.string().required("Contraseña actual es requerida"),
@@ -25,8 +26,14 @@ const ChangePassword = () => {
             confirmNewPassword: "",
         },
         validationSchema: validateSchema,
-        onSubmit: (values) => {
-            console.log(values);
+        onSubmit: async (values) => {
+            const { currentPassword, newPassword } = values;
+            const success = await changePassword(currentPassword, newPassword);
+
+            if (success) {
+                formik.resetForm();
+                setIsEdit(false);
+            }
         },
     });
 
@@ -56,6 +63,7 @@ const ChangePassword = () => {
                     <Input
                         label="Contraseña actual"
                         placeholder="Ingrese contraseña actual"
+                        type="password"
                         readOnly={!isEdit}
                         isInvalid={
                             formik.touched.currentPassword &&
@@ -70,6 +78,7 @@ const ChangePassword = () => {
                     <Input
                         label="Contraseña nueva"
                         placeholder="Ingrese contraseña nueva"
+                        type="password"
                         readOnly={!isEdit}
                         isInvalid={
                             formik.touched.newPassword && !!formik.errors.newPassword
@@ -83,6 +92,7 @@ const ChangePassword = () => {
                     <Input
                         label="Confirmar contraseña nueva"
                         placeholder="Confime contraseña nueva"
+                        type="password"
                         readOnly={!isEdit}
                         isInvalid={
                             formik.touched.confirmNewPassword &&
