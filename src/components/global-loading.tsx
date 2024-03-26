@@ -1,6 +1,6 @@
 "use client";
 import { useCommonStore } from "@/store/common.store";
-import { SpinLoaderIcon } from "./icons";
+import { LoaderIcon } from "./icons";
 
 const GlobalLoading = () => {
     const { globalLoading } = useCommonStore();
@@ -9,7 +9,7 @@ const GlobalLoading = () => {
         globalLoading && (
             <div className="min-h-svh w-full  grid place-content-center absolute top-0 left-0 bg-white/55 z-10">
                 <figure className="animate-spin text-blue-500">
-                    <SpinLoaderIcon size={100} />
+                    <LoaderIcon size={100} />
                 </figure>
             </div>
         )
