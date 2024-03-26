@@ -18,11 +18,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             const user = userString ? JSON.parse(userString) : null;
 
             if (user) setUser(user);
+
+            if (!user && !pathname.includes("auth")) router.replace("/auth/login");
         }
 
         if (user && pathname.includes("auth")) router.replace("/");
-
-        if (!user) router.replace("/auth/login");
     }, [user]);
 
     return children;
