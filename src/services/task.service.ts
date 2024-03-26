@@ -23,7 +23,7 @@ export const updateTask = async (id: string, task: TaskDto) => {
         const existingTask = await taskModel.findById(id);
 
         if (!existingTask) {
-            throw new Error(`Task with id ${id} not found`);
+            throw new Error(`Tarea con ID ${id} no encontrada.`);
         }
 
         task.title = task.title || existingTask.title;
@@ -46,7 +46,7 @@ export const deleteTask = async (id: string) => {
         const existingTask = await taskModel.findById(id);
 
         if (!existingTask) {
-            throw new Error(`Task with id ${id} not found`);
+            throw new Error(`Tarea con ID ${id} no encontrada.`);
         }
 
         await existingTask.deleteOne();
@@ -65,7 +65,7 @@ export const getTask = async (id: string) => {
         const existingTask = await taskModel.findById(id);
 
         if (!existingTask) {
-            throw new Error(`Task with id ${id} not found`);
+            throw new Error(`Tarea con ID ${id} no encontrada.`);
         }
 
         return existingTask;
@@ -93,7 +93,7 @@ export const getTasksByUserId = async (userId: string) => {
         const existingUser = await UserModel.findById(userId);
 
         if (!existingUser) {
-            throw new Error(`User with id ${userId} not found`);
+            throw new Error(`Usuario con ID ${userId} no encontrado.`);
         }
 
         const tasks = await taskModel.find({ userId });

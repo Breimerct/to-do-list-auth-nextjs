@@ -1,3 +1,4 @@
+import { UserDto } from "@/dto/user.dto";
 import {
     hashPassword,
     hideEmail,
@@ -17,7 +18,7 @@ export const createUser = async (user: UserDto) => {
 
         if (existingUser) {
             throw new Error(
-                `User with email ${hideEmail(lowerCaseUser.email)} already exists`
+                `Usuario con email ${hideEmail(lowerCaseUser.email)}, ya existe.`
             );
         }
 
@@ -42,7 +43,7 @@ export const updateUser = async (id: string, user: UserDto) => {
         const lowerCaseUser = lowerCaseObject<UserDto>(user);
 
         if (!existingUser) {
-            throw new Error(`User with id ${id} not found`);
+            throw new Error(`Usuario con ${id} no encontrado.`);
         }
 
         if (lowerCaseUser.email && lowerCaseUser.email !== existingUser.email) {
@@ -51,7 +52,7 @@ export const updateUser = async (id: string, user: UserDto) => {
             });
             if (existingUserEmail) {
                 throw new Error(
-                    `User with email ${hideEmail(lowerCaseUser.email)} already exists`
+                    `Usuario con email ${hideEmail(lowerCaseUser.email)}, ya existe.`
                 );
             }
         }
