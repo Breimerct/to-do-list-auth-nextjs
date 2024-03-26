@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ProtectedRoute from "@/components/protected-route";
+import GlobalLoading from "@/components/global-loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,7 @@ const RootLayout: React.FC<IProps> = ({ children }) => {
     return (
         <html lang="en">
             <body className={inter.className}>
+                <GlobalLoading />
                 <ProtectedRoute>{children}</ProtectedRoute>
             </body>
         </html>

@@ -5,6 +5,7 @@ import Input from "./input";
 import { useFormik } from "formik";
 import { useAuthStore } from "@/store/auth.store";
 import { useRouter } from "next/navigation";
+import { UserDto } from "@/dto/user.dto";
 
 const RegisterForm = () => {
     const { register } = useAuthStore();
@@ -35,11 +36,15 @@ const RegisterForm = () => {
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: (values, { resetForm }) => {
+        onSubmit: async (values, { resetForm }) => {
             const { confirmPassword, ...restObj } = values;
-            register(restObj as UserDto);
-            resetForm();
-            router.push("/");
+            const success = await register(restObj as UserDto);
+
+            if (success) {
+                resetForm();
+                router.push("/");
+                return;
+            }
         },
     });
 

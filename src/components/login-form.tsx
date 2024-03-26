@@ -28,10 +28,14 @@ const LoginForm = () => {
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit: (values, { resetForm }) => {
-            login(values.email, values.password);
-            resetForm();
-            router.push("/");
+        onSubmit: async (values, { resetForm }) => {
+            const success = await login(values.email, values.password);
+
+            if (success) {
+                resetForm();
+                router.push("/");
+                return;
+            }
         },
     });
 
