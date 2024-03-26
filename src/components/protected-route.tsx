@@ -1,6 +1,6 @@
 "use client";
 import { useUserStore } from "@/store/user.store";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 interface ProtectedRouteProps {
@@ -10,6 +10,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     const { user, setUser } = useUserStore();
     const router = useRouter();
+    const pathname = usePathname();
 
     useEffect(() => {
         if (!user) {
@@ -19,7 +20,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
             if (user) setUser(user);
         }
 
-        if (user) router.replace("/");
+        if (user && pathname.includes("auth")) router.replace("/");
 
         if (!user) router.replace("/auth/login");
     }, [user]);
