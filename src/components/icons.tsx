@@ -62,7 +62,7 @@ export const EditIcon: React.FC<IconProps> = ({ size, className }) => (
     </svg>
 );
 
-export const LoaderIcon: React.FC<IconProps> = ({ size, className }) => (
+export const SpinLoaderIcon: React.FC<IconProps> = ({ size, className }) => (
     <svg
         width={size}
         height={size}
@@ -102,5 +102,22 @@ export const MoodSearchIcon: React.FC<IconProps> = ({ size, className }) => (
         <path d="M9.5 15c.658 .672 1.56 1 2.5 1" />
         <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
         <path d="M20.2 20.2l1.8 1.8" />
+    </svg>
+);
+
+export const LoaderIcon: React.FC<IconProps> = ({ size, className }) => (
+    <svg
+        width={size}
+        height={size}
+        className={className}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+    >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M12 3a9 9 0 1 0 9 9" />
     </svg>
 );

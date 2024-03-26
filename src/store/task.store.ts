@@ -2,6 +2,7 @@ import axios from "axios";
 import { create } from "zustand";
 import { useUserStore } from "./user.store";
 import { TaskDto } from "@/dto/task.dto";
+import { useCommonStore } from "./common.store";
 
 type State = {
     tasks: TaskDto[];
@@ -25,6 +26,8 @@ const initialState: State = {
     loadingTasks: false,
 };
 
+const { showGlobalLoading, hideGlobalLoading } = useCommonStore.getState();
+
 export const useTaskStore = create<State & Actions>((set) => ({
     ...initialState,
 
@@ -41,8 +44,19 @@ export const useTaskStore = create<State & Actions>((set) => ({
     },
 
     createTask: async (task) => {
-        const { data } = await axios.post<TaskDto>("/api/task", task);
-        set((state) => ({ tasks: [...state.tasks, data] }));
+        showGlobalLoading();
+        try {
+            await axios.post<TaskDto>("/api/task", task);
+
+            set({ taskSelected: null });
+
+            useTaskStore.getState().fetchTasks(task.userId as string);
+        } catch (error) {
+            console.log(error);
+            useTaskStore.getState().fetchTasks(task.userId as string);
+        } finally {
+            hideGlobalLoading();
+        }
     },
 
     updateTask: async (id, task) => {
