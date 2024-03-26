@@ -17,9 +17,7 @@ export const login = async (email: string, password: string) => {
         const user = await UserModel.findOne({ email: lowerCaseEmail });
 
         if (!user) {
-            throw new Error(
-                `Usuario con email ${hideEmail(lowerCaseEmail)} no encontrado.`
-            );
+            throw new Error(`Usuario con email ${lowerCaseEmail} no encontrado.`);
         }
 
         const isPasswordValid = await validatePassword(password, user.password);
