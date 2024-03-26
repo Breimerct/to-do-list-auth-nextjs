@@ -69,7 +69,7 @@ const ChangePassword = () => {
                 <div>
                     <Input
                         label="Contraseña nueva"
-                        placeholder="Ingrese contraseña actual"
+                        placeholder="Ingrese contraseña nueva"
                         readOnly={!isEdit}
                         isInvalid={
                             formik.touched.newPassword && !!formik.errors.newPassword
@@ -82,7 +82,7 @@ const ChangePassword = () => {
                 <div>
                     <Input
                         label="Confirmar contraseña nueva"
-                        placeholder="Ingrese contraseña actual"
+                        placeholder="Confime contraseña nueva"
                         readOnly={!isEdit}
                         isInvalid={
                             formik.touched.confirmNewPassword &&
