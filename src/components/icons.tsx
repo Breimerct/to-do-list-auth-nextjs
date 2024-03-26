@@ -30,7 +30,7 @@ export const TrashIcon: React.FC<IconProps> = ({ size, className }) => (
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1"
+        strokeWidth="1.25"
         strokeLinecap="round"
         strokeLinejoin="round"
     >
@@ -51,7 +51,7 @@ export const EditIcon: React.FC<IconProps> = ({ size, className }) => (
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1"
+        strokeWidth="1.25"
         strokeLinecap="round"
         strokeLinejoin="round"
     >
@@ -64,15 +64,15 @@ export const EditIcon: React.FC<IconProps> = ({ size, className }) => (
 
 export const LoaderIcon: React.FC<IconProps> = ({ size, className }) => (
     <svg
-        width={`${size}px`}
-        height={`${size}px`}
+        width={size}
+        height={size}
         className={className}
         viewBox="0 0 24 24"
         fill="none"
-        stroke="#015ec1"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
     >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <path d="M18 16v.01" />
@@ -80,5 +80,27 @@ export const LoaderIcon: React.FC<IconProps> = ({ size, className }) => (
         <path d="M12 5v.01" />
         <path d="M12 12v.01" />
         <path d="M12 1a4 4 0 0 1 2.001 7.464l.001 .072a3.998 3.998 0 0 1 1.987 3.758l.22 .128a3.978 3.978 0 0 1 1.591 -.417l.2 -.005a4 4 0 1 1 -3.994 3.77l-.28 -.16c-.522 .25 -1.108 .39 -1.726 .39c-.619 0 -1.205 -.14 -1.728 -.391l-.279 .16l.007 .231a4 4 0 1 1 -2.212 -3.579l.222 -.129a3.998 3.998 0 0 1 1.988 -3.756l.002 -.071a4 4 0 0 1 -1.995 -3.265l-.005 -.2a4 4 0 0 1 4 -4z" />
+    </svg>
+);
+
+export const MoodSearchIcon: React.FC<IconProps> = ({ size, className }) => (
+    <svg
+        width={size}
+        height={size}
+        className={className}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+    >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <path d="M21 12a9 9 0 1 0 -9 9" />
+        <path d="M9 10h.01" />
+        <path d="M15 10h.01" />
+        <path d="M9.5 15c.658 .672 1.56 1 2.5 1" />
+        <path d="M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" />
+        <path d="M20.2 20.2l1.8 1.8" />
     </svg>
 );

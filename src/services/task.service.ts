@@ -43,7 +43,7 @@ export const deleteTask = async (id: string) => {
         connectDB();
 
         validateMongoId(id);
-        const existingTask = await taskModel;
+        const existingTask = await taskModel.findById(id);
 
         if (!existingTask) {
             throw new Error(`Task with id ${id} not found`);

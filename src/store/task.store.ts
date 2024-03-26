@@ -6,6 +6,7 @@ import { TaskDto } from "@/dto/task.dto";
 type State = {
     tasks: TaskDto[];
     taskSelected: TaskDto | null;
+    loadingTasks: boolean;
 };
 
 type Actions = {
@@ -15,19 +16,28 @@ type Actions = {
     deleteTask: (id: string) => void;
     setTaskSelected: (task: TaskDto | null) => void;
     setTasks: (tasks: TaskDto[]) => void;
+    setLoadingTasks: (loading: boolean) => void;
 };
 
 const initialState: State = {
     tasks: [],
     taskSelected: null,
+    loadingTasks: false,
 };
 
 export const useTaskStore = create<State & Actions>((set) => ({
     ...initialState,
 
     fetchTasks: async (userId) => {
-        const { data } = await axios.get<TaskDto[]>(`/api/task/user/${userId}`);
-        set({ tasks: data });
+        set({ loadingTasks: true });
+        try {
+            const { data } = await axios.get<TaskDto[]>(`/api/task/user/${userId}`);
+            set({ tasks: data });
+        } catch (error) {
+            console.log(error);
+        } finally {
+            set({ loadingTasks: false });
+        }
     },
 
     createTask: async (task) => {
@@ -58,4 +68,6 @@ export const useTaskStore = create<State & Actions>((set) => ({
     setTaskSelected: (task) => set({ taskSelected: task }),
 
     setTasks: (tasks) => set({ tasks }),
+
+    setLoadingTasks: (loading) => set({ loadingTasks: loading }),
 }));
