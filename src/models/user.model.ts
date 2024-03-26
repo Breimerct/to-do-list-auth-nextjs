@@ -1,3 +1,4 @@
+import { getAvatarUrl } from "@/helpers/utils";
 import { Schema, model, Document, models } from "mongoose";
 
 export interface UserDocument extends Document {
@@ -39,16 +40,16 @@ const userSchema = new Schema<UserDocument>({
     avatar: {
         type: String,
         default: function () {
-            return `https://ui-avatars.com/api/?name=${this.fullName}&background=random`;
+            return getAvatarUrl(this.fullName);
         },
     },
     createAt: {
         type: Date,
-        default: Date.now,
+        default: new Date(),
     },
     updatedAt: {
         type: Date,
-        default: Date.now,
+        default: new Date(),
     },
     deletedAt: {
         type: Date,

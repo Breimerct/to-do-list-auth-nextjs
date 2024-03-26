@@ -78,18 +78,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
             </div>
 
             <div className="flex gap-2 flex-nowrap items-center">
-                <button
-                    className="bg-orange-400 hover:bg-orange-300 hover:shadow-md text-white transition-all p-2 rounded-full w-10 h-10"
-                    type="button"
-                    onClick={selectTask}
-                >
+                <button className="btn-warning-icon" type="button" onClick={selectTask}>
                     <EditIcon size={24} />
                 </button>
-                <button
-                    className="bg-red-500 hover:bg-red-600 hover:shadow-md text-white transition-all p-2 rounded-full w-10 h-10"
-                    type="button"
-                    onClick={confirmDelete}
-                >
+                <button className="btn-danger-icon" type="button" onClick={confirmDelete}>
                     <TrashIcon size={24} />
                 </button>
             </div>

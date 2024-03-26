@@ -1,5 +1,10 @@
 import { UserDto } from "@/dto/user.dto";
-import { hashPassword, lowerCaseObject, validateMongoId } from "@/helpers/utils";
+import {
+    getAvatarUrl,
+    hashPassword,
+    lowerCaseObject,
+    validateMongoId,
+} from "@/helpers/utils";
 import connectDB from "@/lib/mongo";
 import UserModel from "@/models/user.model";
 
@@ -50,8 +55,9 @@ export const updateUser = async (id: string, user: UserDto) => {
 
         lowerCaseUser.name = lowerCaseUser.name || existingUser.name;
         lowerCaseUser.lastname = lowerCaseUser.lastname || existingUser.lastname;
-        lowerCaseUser.email = lowerCaseUser.email || existingUser.email;
         lowerCaseUser.fullName = `${lowerCaseUser.name} ${lowerCaseUser.lastname}`;
+        lowerCaseUser.avatar = getAvatarUrl(lowerCaseUser.fullName);
+        lowerCaseUser.email = lowerCaseUser.email || existingUser.email;
 
         const updatedUser = await UserModel.findByIdAndUpdate(id, lowerCaseUser, {
             new: true,

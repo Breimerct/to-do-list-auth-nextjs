@@ -1,3 +1,6 @@
+import { UserDto } from "@/dto/user.dto";
+import axios, { isAxiosError } from "axios";
+import { toast } from "react-toastify";
 import { create } from "zustand";
 
 type State = {
@@ -7,6 +10,7 @@ type State = {
 type Actions = {
     setUser: (user: UserDto) => void;
     clearUser: () => void;
+    updateProfile: (user: UserDto) => void;
 };
 
 const initialState: State = {
@@ -19,4 +23,20 @@ export const useUserStore = create<State & Actions>((set) => ({
     setUser: (user) => set({ user }),
 
     clearUser: () => set({ user: null }),
+
+    updateProfile: async (user) => {
+        try {
+            const { data } = await axios.patch<UserDto>(
+                `/api/user/update/${user._id}`,
+                user
+            );
+
+            set({ user: data });
+            toast.success("Perfil actualizado correctamente.");
+        } catch (error) {
+            if (isAxiosError(error)) {
+                toast.error(error.response?.data.message);
+            }
+        }
+    },
 }));
