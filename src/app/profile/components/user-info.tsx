@@ -3,21 +3,13 @@ import { EditIcon } from "@/components/icons";
 import Input from "@/components/input";
 import { useUserStore } from "@/store/user.store";
 import * as Yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { UserDto } from "@/dto/user.dto";
 
 const UserInfo = () => {
     const { user, updateProfile } = useUserStore();
     const [isEdit, setIsEdit] = useState(false);
-
-    const handleEdit = () => {
-        setIsEdit(true);
-    };
-
-    const cancelEdit = () => {
-        setIsEdit(false);
-    };
 
     const initialValues = {
         name: user?.name,
@@ -32,13 +24,32 @@ const UserInfo = () => {
     const formik = useFormik({
         initialValues,
         validationSchema: validateSchema,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             if (user) {
-                updateProfile({ ...user, ...values } as UserDto);
-                setIsEdit(false);
+                const success = await updateProfile({ ...user, ...values } as UserDto);
+
+                if (success) {
+                    setIsEdit(false);
+                }
             }
         },
     });
+
+    useEffect(() => {
+        formik.setValues({
+            name: user?.name,
+            lastname: user?.lastname,
+        });
+    }, [user]);
+
+    const handleEdit = () => {
+        setIsEdit(true);
+    };
+
+    const cancelEdit = () => {
+        formik.resetForm();
+        setIsEdit(false);
+    };
 
     return (
         <div className="flex flex-col gap-4 justify-center items-center">
