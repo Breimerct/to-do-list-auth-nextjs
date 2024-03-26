@@ -32,6 +32,7 @@ export const useUserStore = create<State & Actions>((set) => ({
             );
 
             set({ user: data });
+            localStorage.setItem("user", JSON.stringify(data));
             toast.success("Perfil actualizado correctamente.");
         } catch (error) {
             if (isAxiosError(error)) {
