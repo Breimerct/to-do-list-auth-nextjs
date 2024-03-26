@@ -51,7 +51,7 @@ const UserInfo = () => {
             </picture>
 
             <div className="w-full">
-                <div className="flex justify-end mb-2">
+                <div className="flex justify-end">
                     <button
                         className="btn-primary-icon"
                         onClick={handleEdit}
@@ -64,8 +64,8 @@ const UserInfo = () => {
                 <form className="flex flex-col gap-4" onSubmit={formik.handleSubmit}>
                     <div>
                         <Input
+                            label="Nombre"
                             type="text"
-                            id="name"
                             isInvalid={formik.touched.name && !!formik.errors.name}
                             messageError={formik.errors.name}
                             {...formik.getFieldProps("name")}
@@ -75,8 +75,8 @@ const UserInfo = () => {
 
                     <div>
                         <Input
+                            label="Apellido"
                             type="text"
-                            id="lastname"
                             isInvalid={
                                 formik.touched.lastname && !!formik.errors.lastname
                             }
