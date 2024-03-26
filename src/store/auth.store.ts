@@ -1,8 +1,9 @@
 import { create } from "zustand";
 import { useUserStore } from "./user.store";
-import axios from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { UserDto } from "@/dto/user.dto";
 import { useCommonStore } from "./common.store";
+import { toast } from "react-toastify";
 
 type State = {};
 
@@ -31,7 +32,10 @@ export const useAuthStore = create<State & Actions>((set) => ({
             setUser(data);
             localStorage.setItem("user", JSON.stringify(data));
             return true;
-        } catch (error) {
+        } catch (error: any) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data.message || "Error al iniciar sesión");
+            }
             return false;
         } finally {
             hideGlobalLoading();
@@ -47,6 +51,9 @@ export const useAuthStore = create<State & Actions>((set) => ({
 
             return true;
         } catch (error) {
+            if (error instanceof AxiosError) {
+                toast.error(error.response?.data.message || "Error al registrar usuario");
+            }
             return false;
         } finally {
             hideGlobalLoading();
