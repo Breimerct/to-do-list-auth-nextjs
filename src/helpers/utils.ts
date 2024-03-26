@@ -47,3 +47,7 @@ export const lowerCaseObject = <T>(object: T | any): T => {
         password,
     };
 };
+
+export const getAvatarUrl = (fullName: string) => {
+    return `https://ui-avatars.com/api/?name=${fullName}&background=random&bold=true&uppercase=true`;
+};
