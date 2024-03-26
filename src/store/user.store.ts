@@ -10,7 +10,7 @@ type State = {
 type Actions = {
     setUser: (user: UserDto) => void;
     clearUser: () => void;
-    updateProfile: (user: UserDto) => void;
+    updateProfile: (user: UserDto) => Promise<boolean>;
 };
 
 const initialState: State = {
@@ -34,10 +34,14 @@ export const useUserStore = create<State & Actions>((set) => ({
             set({ user: data });
             localStorage.setItem("user", JSON.stringify(data));
             toast.success("Perfil actualizado correctamente.");
+
+            return true;
         } catch (error) {
             if (isAxiosError(error)) {
                 toast.error(error.response?.data.message);
             }
+
+            return false;
         }
     },
 }));
