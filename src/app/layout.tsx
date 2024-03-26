@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import ProtectedRoute from "@/components/protected-route";
 import GlobalLoading from "@/components/global-loading";
 import { ToastContainer } from "react-toastify";

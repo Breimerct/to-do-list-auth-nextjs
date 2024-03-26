@@ -47,9 +47,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
 
     return (
         <li
-            className={`w-full flex items-center p-4 shadow-md rounded-md ${
+            className={`w-full flex gap-4 items-center p-4 shadow-md rounded-md ${
                 task.completed
-                    ? "bg-green-500/50 text-black/50 line-through"
+                    ? "bg-green-300 text-black/50 line-through"
                     : "bg-red-400 text-white"
             }`}
         >
@@ -63,9 +63,17 @@ const TaskItem: React.FC<TaskItemProps> = ({ task }) => {
                     />
                 </div>
 
-                <div className="flex-1">
-                    <p className="font-semibold text-xl">{task.title}</p>
-                    <p className="text-sm italic">{task.description}</p>
+                <div className="break-all overflow-y-auto scroll-smooth scrollbar transition-all">
+                    <p
+                        className={`font-semibold text-xl sticky top-0 ${
+                            task.completed
+                                ? "bg-green-300 text-black/50 line-through"
+                                : "bg-red-400 text-white"
+                        }`}
+                    >
+                        {task.title}
+                    </p>
+                    <p className="text-sm max-h-20 font-mono pr-4">{task.description}</p>
                 </div>
             </div>
 
