@@ -1,3 +1,4 @@
+import { UserDto } from "@/dto/user.dto";
 import { createUser } from "@/services/user.service";
 
 export async function POST(request: Request) {
